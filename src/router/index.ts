@@ -1,26 +1,51 @@
+/*
+ * @Author: tcosfish
+ * @Date: 2022-05-09 17:46:51
+ * @LastEditors: tcosfish
+ * @LastEditTime: 2022-06-03 09:49:47
+ * @FilePath: \vue3admin\src\router\index.ts
+ */
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
-import Home from "../views/Home.vue";
+import MyCache from "../utils/cache";
+import { mapMenuToRouter } from "../utils/mapMenu";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
+    redirect: "/main", // 初始路由重定向
   },
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+    path: "/login",
+    name: "Login",
+    component: () => import("@/views/Login/Login.vue"),
+  },
+  {
+    path: "/main",
+    name: "Main",
+    component: () => import("@/views/Main/Main.vue"),
+  },
+  {
+    // 根据 url访问不存在的地方
+    path: "/:pathMatch(.*)*",
+    name: "NotFound",
+    component: () => import("@/views/NotFound/NotFound.vue"),
   },
 ];
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
+});
+
+// 添加一个全局守卫
+router.beforeEach(async (to, from, next) => {
+  const token = MyCache.getCache("token");
+  if (!token && to.name !== "Login") {
+    next("/login");
+  } else {
+    next();
+  }
+  // TODO! 刷新时直接访问, 此时路由还不存在
 });
 
 export default router;

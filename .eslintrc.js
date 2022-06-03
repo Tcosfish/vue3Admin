@@ -1,3 +1,10 @@
+/*
+ * @Author: tcosfish
+ * @Date: 2022-05-09 17:46:51
+ * @LastEditors: tcosfish
+ * @LastEditTime: 2022-06-01 23:11:44
+ * @FilePath: \vue3admin\.eslintrc.js
+ */
 module.exports = {
   root: true,
   env: {
@@ -16,5 +23,8 @@ module.exports = {
   rules: {
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
   },
 };

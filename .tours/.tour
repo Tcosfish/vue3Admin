@@ -1,0 +1,11 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "请求操作的逻辑",
+  "steps": [
+    {
+      "file": "src/store/login/login.ts",
+      "description": "## 登录逻辑\r\n\r\n0. LoginPane 调用 子组件的 formLogin 方法\r\n1. LoginAccount 调用 ",
+      "line": 36
+    }
+  ]
+}

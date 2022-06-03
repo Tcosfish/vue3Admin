@@ -1,0 +1,28 @@
+
+@contentType = application/json
+@token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImNvZGVyd2h5Iiwicm9sZSI6eyJpZCI6MSwibmFtZSI6Iui2hee6p-euoeeQhuWRmCJ9LCJpYXQiOjE2NTMyMDkxMDgsImV4cCI6MTY1NTgwMTEwOH0.MurjuNZXzo-45cXpU5wEASjymdv_LYvfAzqzscy3JHNmf3mjSm3fbyB0rQTMJde1OFztenKv8UVmqce-MtdogXh__-H6ZPqtSW8aA15djMDtIXYsI2J2zBBkSkWrllhGF1cHuloie2NR00KuoAB8YopUOaMOsmDix0IiruXfIZ0"
+
+# 登录接口 -- account
+POST http://152.136.185.210:5000/login
+Content-Type: {{contentType}}
+
+{
+  "name": "coderwhy",
+  "password": "123456"
+}
+
+###
+# userInfo -- id
+POST http://152.136.185.210:5000/users
+Content-Type: {{contentType}}
+Authorization: {{token}}
+
+{
+  "id": 1
+}
+
+
+###
+GET http://152.136.185.210:5000/role/1/menu
+Content-Type: {{contentType}}
+Authorization: Bearer {{token}}

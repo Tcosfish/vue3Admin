@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
+    // babel TS -> JS 的版本
     "target": "esnext",
+    // 模块化方案, 也可以换成 CommonJS
     "module": "esnext",
     "strict": true,
     "jsx": "preserve",
@@ -14,18 +16,20 @@
     "types": [
       "webpack-env"
     ],
+    // 路径别名
     "paths": {
       "@/*": [
         "src/*"
       ]
     },
+    // 项目中指定使用库的类型
     "lib": [
       "esnext",
       "dom",
       "dom.iterable",
       "scripthost"
     ]
-  },
+  },  
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",

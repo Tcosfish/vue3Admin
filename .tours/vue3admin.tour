@@ -1,0 +1,16 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "vue3Admin",
+  "steps": [
+    {
+      "file": "src/store/login/login.ts",
+      "description": "登录逻辑表达: \r\n\r\n1. 发送请求\r\n2. 保存响应的数据\r\n3. 根据该数据设置 state 中的对应值\r\n4. 将 token 保存在 localStorage 中 --> 登录后, 在当前网页中会保留token, 以便其他页面的正常访问\r\n*. 由于刷新会重置 Vuex, 而不会重置 localStorage 中的数据, 因而我们需要保持 token 在 vuex 和 LS 中的一致",
+      "line": 36
+    },
+    {
+      "file": "src/router/index.ts",
+      "description": "### 写个全局路由守卫 beforeEnter(to, from, next)\r\n\r\n- to: 将要跳转的路由\r\n- from: 跳转前的路由\r\n- next: 跳转方法, 一定要调用, 负责不会进行跳转",
+      "line": 13
+    }
+  ]
+}
