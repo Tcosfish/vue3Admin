@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-03 12:12:30
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-03 13:21:53
+ * @LastEditTime: 2022-06-03 23:29:06
  * @FilePath: \vue3admin\src\components\BaseList\src\BaseList.vue
 -->
 <template>
@@ -17,28 +17,21 @@
       </el-col>
     </el-row>
     <el-table :data="tableData" border style="width: 94%">
-      <el-table-column prop="id" label="序号" width="120" />
-      <el-table-column prop="name" label="用户名" width="120" />
-      <el-table-column prop="realname" label="真实姓名" width="100" />
-      <el-table-column prop="cellphone" label="电话号码" width="160" />
-      <el-table-column prop="status" label="状态" width="80">
-        <!-- 通过 scope 拿到绑定到 data上的对象 -->
-        <template #default="scope">
-          <el-tag :type="scope.row.status === 1 ? 'success' : 'dange'">
-            {{ scope.row.status === 1 ? "启用" : "弃用" }}
-          </el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column prop="createAt" label="创建时间" width="240" />
-      <el-table-column prop="updateAt" label="更新时间" width="240" />
-      <el-table-column label="操作" width="140">
+      <el-table-column
+        v-for="item in tableItems"
+        :key="item.prop"
+        :prop="item.prop"
+        :label="item.label"
+        :width="item.width"
+      ></el-table-column>
+      <el-table-column v-if="operations" label="操作" width="140">
         <template #default>
-          <el-button type="text" class="my-button-primary">
-            <i class="el-icon-edit"></i>编辑
-          </el-button>
-          <el-button type="text" class="my-button-danger">
-            <i class="el-icon-delete"></i>删除
-          </el-button>
+          <template v-for="operation in operations" :key="operation.message">
+            <component :is="operation.tag" :type="operation.type">
+              <i v-if="operation.i_class" :class="operation.i_class"></i>
+              {{ operation.message }}
+            </component>
+          </template>
         </template>
       </el-table-column>
     </el-table>
@@ -50,6 +43,16 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "BaseList",
+  props: {
+    tableItems: {
+      type: Array,
+      default: () => [],
+    },
+    operations: {
+      type: Array,
+      default: () => [],
+    },
+  },
   setup() {
     const tableData = [
       {

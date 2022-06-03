@@ -2,11 +2,9 @@
  * @Author: tcosfish
  * @Date: 2022-06-03 13:23:34
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-03 22:30:04
+ * @LastEditTime: 2022-06-03 22:50:01
  * @FilePath: \vue3admin\src\components\BaseList\types\index.ts
  */
-
-type TableItemType = "show-data" | "operations";
 
 interface operation {
   isScope: boolean;
@@ -18,7 +16,6 @@ interface operation {
 }
 
 interface TableItem {
-  type: TableItemType;
   prop: string;
   label: string;
   width?: string;
@@ -26,7 +23,7 @@ interface TableItem {
 }
 
 interface TF_Table {
-  tableList: TableItem[];
+  tableItems: TableItem[];
   operations?: operation[];
 }
 

@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-01 22:26:23
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-03 12:16:55
+ * @LastEditTime: 2022-06-03 22:47:55
  * @FilePath: \vue3admin\src\views\Main\System\User\User.vue
 -->
 <template>
@@ -11,7 +11,7 @@
       <base-form v-bind="searchFormConfig" />
     </div>
     <div class="list">
-      <base-list />
+      <base-list v-bind="TFTableConfig" />
     </div>
   </div>
 </template>
@@ -21,12 +21,14 @@ import { defineComponent } from "vue";
 import BaseForm from "@/components/BaseForm";
 import BaseList from "@/components/BaseList";
 import { searchFormConfig } from "./config/search.config";
+import { TFTableConfig } from "./config/list.config";
 
 export default defineComponent({
   name: "User",
   setup() {
     return {
       searchFormConfig,
+      TFTableConfig,
     };
   },
   components: {
