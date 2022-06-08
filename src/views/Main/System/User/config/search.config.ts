@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-03 12:00:46
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-03 12:02:41
+ * @LastEditTime: 2022-06-04 16:42:43
  * @FilePath: \vue3admin\src\views\Main\System\User\config\search.config.ts
  */
 import { IForm } from "@/components/BaseForm";
@@ -11,30 +11,35 @@ export const searchFormConfig: IForm = {
   formItems: [
     {
       type: "input",
+      model: "id",
       label: "id",
       rules: [],
       placeholder: "请输入id",
     },
     {
       type: "input",
+      model: "name",
       label: "用户名",
       rules: [],
       placeholder: "请输入用户名",
     },
     {
       type: "password",
+      model: "password",
       label: "密码",
       rules: [],
       placeholder: "请输入密码",
     },
     {
       type: "input",
+      model: "cellphone",
       label: "电话号码",
       rules: [],
       placeholder: "请输入电话号码",
     },
     {
       type: "select",
+      model: "status",
       label: "状态",
       rules: [],
       placeholder: "请选择当前状态",
@@ -47,6 +52,7 @@ export const searchFormConfig: IForm = {
     },
     {
       type: "datePicker",
+      model: "createAt",
       label: "创建时间",
       rules: [],
       otherOptions: {

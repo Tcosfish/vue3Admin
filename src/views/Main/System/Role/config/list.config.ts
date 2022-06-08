@@ -2,14 +2,14 @@
  * @Author: tcosfish
  * @Date: 2022-06-03 22:13:37
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-07 22:26:28
- * @FilePath: \vue3admin\src\views\Main\System\User\config\list.config.ts
+ * @LastEditTime: 2022-06-08 12:36:22
+ * @FilePath: \vue3admin\src\views\Main\System\Role\config\list.config.ts
  */
 import { TF_Table } from "@/components/BaseList/index";
 
 export const listConfig: TF_Table = {
   // 列表名
-  title: "用户列表",
+  title: "角色列表",
   // 列表列设置
   tableItems: [
     {
@@ -19,23 +19,10 @@ export const listConfig: TF_Table = {
       slot: "default",
     },
     {
-      prop: "realname",
-      label: "真实姓名",
-      width: "100",
+      prop: "intro",
+      label: "介绍",
+      width: "120",
       slot: "default",
-    },
-    {
-      prop: "cellphone",
-      label: "电话号码",
-      width: "160",
-      slot: "default",
-    },
-    {
-      prop: "enable",
-      label: "状态",
-      width: "80",
-      otherOption: [],
-      slot: "status",
     },
     {
       prop: "createAt",

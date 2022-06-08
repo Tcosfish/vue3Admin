@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-03 10:15:29
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-03 11:54:43
+ * @LastEditTime: 2022-06-04 16:28:40
  * @FilePath: \vue3admin\src\components\BaseForm\types\index.ts
  */
 
@@ -10,6 +10,7 @@ type IFormType = "input" | "password" | "select" | "datePicker";
 
 export interface IFormItem {
   type: IFormType;
+  model: string;
   label: string;
   rules?: any[];
   placeholder?: string;

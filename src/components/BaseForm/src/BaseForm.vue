@@ -2,12 +2,15 @@
  * @Author: tcosfish
  * @Date: 2022-06-03 09:55:10
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-03 11:56:32
+ * @LastEditTime: 2022-06-07 10:27:04
  * @FilePath: \vue3admin\src\components\BaseForm\src\BaseForm.vue
 -->
 <template>
   <div class="tf-form">
-    <el-form :label-width="labelWidth">
+    <div class="header">
+      <slot name="header"></slot>
+    </div>
+    <el-form :label-width="labelWidth" :model="formData">
       <el-row>
         <template v-for="item in formItems" :key="item.label">
           <el-col :span="8" v-bind="colLayout">
@@ -23,10 +26,15 @@
                   :placeholder="item.placeholder"
                   :type="item.type"
                   :show-password="item.type === 'password'"
+                  v-model="formData[`${item.model}`]"
                 ></el-input>
               </template>
               <template v-else-if="item.type === 'select'">
-                <el-select :placeholder="item.placeholder" style="width: 100%">
+                <el-select
+                  :placeholder="item.placeholder"
+                  style="width: 100%"
+                  v-model="formData[`${item.model}`]"
+                >
                   <el-option
                     v-for="option in item.options"
                     :key="option.value"
@@ -40,6 +48,7 @@
                 <el-date-picker
                   v-bind="item.otherOptions"
                   style="width: 100%"
+                  v-model="formData[`${item.model}`]"
                 />
               </template>
             </el-form-item>
@@ -47,16 +56,23 @@
         </template>
       </el-row>
     </el-form>
+    <div class="footer">
+      <slot name="footer"></slot>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType, reactive, watch } from "vue";
 import { IFormItem } from "../types";
 
 export default defineComponent({
   name: "BaseForm",
   props: {
+    modelValue: {
+      type: Object,
+      require: true,
+    },
     formItems: {
       type: Array as PropType<IFormItem[]>,
       default: () => [],
@@ -81,6 +97,21 @@ export default defineComponent({
         xs: 24,
       }),
     },
+  },
+  emits: ["update:modelValue"],
+  setup(props, { emit }) {
+    const formData = reactive({ ...props.modelValue });
+    watch(
+      formData,
+      (newValue) => {
+        console.log("Hello, world");
+        emit("update:modelValue", newValue, { deep: true }); // 深度监听
+      },
+      { deep: true }
+    );
+    return {
+      formData,
+    };
   },
 });
 </script>

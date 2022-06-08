@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-05-09 17:46:51
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-01 23:11:44
+ * @LastEditTime: 2022-06-04 17:44:27
  * @FilePath: \vue3admin\.eslintrc.js
  */
 module.exports = {

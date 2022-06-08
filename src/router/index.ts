@@ -2,12 +2,11 @@
  * @Author: tcosfish
  * @Date: 2022-05-09 17:46:51
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-03 09:49:47
+ * @LastEditTime: 2022-06-04 11:57:04
  * @FilePath: \vue3admin\src\router\index.ts
  */
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import MyCache from "../utils/cache";
-import { mapMenuToRouter } from "../utils/mapMenu";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -22,6 +21,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/main",
     name: "Main",
+    redirect: "/main/analysis/overview",
     component: () => import("@/views/Main/Main.vue"),
   },
   {

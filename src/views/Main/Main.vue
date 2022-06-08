@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-05-22 15:40:56
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-03 12:38:20
+ * @LastEditTime: 2022-06-07 14:49:22
  * @FilePath: \vue3admin\src\views\Main\Main.vue
 -->
 <template>
@@ -65,7 +65,7 @@ export default defineComponent({
   transition: width 0.15s;
 }
 .page-content {
-  background: #ddd;
+  background: #f5f5f5;
   text-align: center;
 }
 .page-info {

@@ -2,10 +2,11 @@
  * @Author: tcosfish
  * @Date: 2022-06-01 22:43:23
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-01 23:53:37
+ * @LastEditTime: 2022-06-04 15:59:26
  * @FilePath: \vue3admin\src\utils\mapMenu.ts
  */
 
+import { IBreadcrumb } from "@/components/BaseNavBreadcrumb";
 import { RouteRecordRaw } from "vue-router";
 
 export function mapMenuToRouter(userMenu: any[]): RouteRecordRaw[] {
@@ -40,4 +41,29 @@ export function mapMenuToRouter(userMenu: any[]): RouteRecordRaw[] {
   _reduceGetRoute(userMenu);
 
   return routes;
+}
+
+export function getBreadcrumbs(userMenus: any[], currentPath: string) {
+  const breadcrumbs: IBreadcrumb = [];
+  temporaryTool(userMenus, currentPath, breadcrumbs);
+  return breadcrumbs;
+}
+
+export function temporaryTool(
+  userMenus: any[],
+  currentPath: string,
+  breadcrumbs?: IBreadcrumb
+): any {
+  for (const menu of userMenus) {
+    if (menu.type === 1) {
+      const findMenu = temporaryTool(menu.children ?? [], currentPath);
+      if (findMenu) {
+        breadcrumbs?.push({ name: menu.name });
+        breadcrumbs?.push({ name: findMenu.name });
+        return findMenu;
+      }
+    } else if (menu.type === 2 && menu.url === currentPath) {
+      return menu;
+    }
+  }
 }

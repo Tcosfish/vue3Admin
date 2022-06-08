@@ -2,39 +2,60 @@
  * @Author: tcosfish
  * @Date: 2022-06-03 12:12:30
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-03 23:29:06
+ * @LastEditTime: 2022-06-08 11:42:42
  * @FilePath: \vue3admin\src\components\BaseList\src\BaseList.vue
 -->
 <template>
   <div class="tf-list">
-    <el-row class="list-header">
-      <el-col :span="6">
-        <h4>用户列表</h4>
-      </el-col>
-      <el-col :span="6" :offset="12">
-        <el-button type="primary" size="small">新建用户</el-button>
-        <el-button type="primary" size="small">刷新</el-button>
-      </el-col>
-    </el-row>
-    <el-table :data="tableData" border style="width: 94%">
+    <div class="list-header">
+      <slot name="list-header">
+        <div class="title">
+          {{ title }}
+        </div>
+        <div class="handler">
+          <slot name="list-header-hander"></slot>
+        </div>
+      </slot>
+    </div>
+    <el-table :data="listData" border @selection-change="handleSelectionChange">
+      <el-table-column
+        v-if="showSelectColumn"
+        type="selection"
+        align="center"
+        width="60"
+      ></el-table-column>
+      <el-table-column
+        v-if="showIndexColumn"
+        type="index"
+        label="列表序号"
+        align="center"
+        width="80"
+      ></el-table-column>
       <el-table-column
         v-for="item in tableItems"
         :key="item.prop"
         :prop="item.prop"
         :label="item.label"
-        :width="item.width"
-      ></el-table-column>
-      <el-table-column v-if="operations" label="操作" width="140">
-        <template #default>
-          <template v-for="operation in operations" :key="operation.message">
-            <component :is="operation.tag" :type="operation.type">
-              <i v-if="operation.i_class" :class="operation.i_class"></i>
-              {{ operation.message }}
-            </component>
-          </template>
+        :min-width="item.width"
+        align="center"
+      >
+        <template #default="scope">
+          <slot :name="item.slot" :row="scope.row">
+            {{ scope.row[item.prop] }}
+          </slot>
         </template>
       </el-table-column>
     </el-table>
+    <div class="list-footer">
+      <slot name="list-footer">
+        <!-- <el-pagination
+          page-size="100"
+          small
+          layout="sizes, prev, pager, next, jumper, ->, total"
+          :total="100"
+        /> -->
+      </slot>
+    </div>
   </div>
 </template>
 
@@ -44,49 +65,58 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "BaseList",
   props: {
+    title: {
+      type: String,
+    },
+    // 列表头
     tableItems: {
       type: Array,
       default: () => [],
     },
-    operations: {
+    // 列表数据
+    listData: {
       type: Array,
-      default: () => [],
+      require: true,
+    },
+    showIndexColumn: {
+      type: Boolean,
+      default: false,
+    },
+    showSelectColumn: {
+      type: Boolean,
+      default: false,
     },
   },
-  setup() {
-    const tableData = [
-      {
-        id: 1,
-        name: "coderwhy",
-        realname: "coderwhy",
-        cellphone: 18812345678,
-        status: 1,
-        createAt: "2021-01-02T10:20:26.000Z",
-        updateAt: "2021-01-03T04:50:13.000Z",
-      },
-      {
-        id: 2,
-        name: "james",
-        realname: "james",
-        cellphone: 18811245678,
-        status: 1,
-        createAt: "2021-01-02T10:20:26.000Z",
-        updateAt: "2021-01-03T04:50:13.000Z",
-      },
-    ];
+  emits: ["selectionChange"],
+  setup(props, { emit }) {
+    const handleSelectionChange = (value: any) => {
+      emit("selectionChange", value); // 前面打开选择功能时, 发射 selectionChange 事件
+    };
+
     return {
-      tableData,
+      handleSelectionChange,
     };
   },
 });
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 /* @import url(); 引入css类 */
-.my-button-primary {
-  color: #409eff;
+.list-header {
+  display: flex;
+  height: 45px;
+  padding: 0 5px;
+  justify-content: space-between;
+  align-items: center;
+  .title {
+    font-size: 20px;
+    font-weight: 700;
+  }
 }
-.my-button-danger {
-  color: #f56c6c;
+.list-footer {
+  margin-top: 15px;
+  .el-pagination {
+    text-align: right;
+  }
 }
 </style>
