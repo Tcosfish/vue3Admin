@@ -2,14 +2,15 @@
  * @Author: tcosfish
  * @Date: 2022-06-04 11:05:48
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-04 16:09:40
+ * @LastEditTime: 2022-06-08 17:40:14
  * @FilePath: \vue3admin\src\components\BaseHeaderMain\src\NavUserInfo.vue
 -->
 <template>
   <div>
-    <div
-      style="width: 30px; height: 30px; border-radius: 50%; background: #000"
-    ></div>
+    <el-avatar
+      size="small"
+      src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+    />
   </div>
 </template>
 

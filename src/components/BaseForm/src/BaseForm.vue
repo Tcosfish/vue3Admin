@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-03 09:55:10
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-07 10:27:04
+ * @LastEditTime: 2022-06-09 18:44:15
  * @FilePath: \vue3admin\src\components\BaseForm\src\BaseForm.vue
 -->
 <template>
@@ -26,7 +26,7 @@
                   :placeholder="item.placeholder"
                   :type="item.type"
                   :show-password="item.type === 'password'"
-                  v-model="formData[`${item.model}`]"
+                  v-model.lazy="formData[`${item.model}`]"
                 ></el-input>
               </template>
               <template v-else-if="item.type === 'select'">
@@ -98,19 +98,26 @@ export default defineComponent({
       }),
     },
   },
-  emits: ["update:modelValue"],
+  emits: ["update:modelValue", "emitBaseForm"],
   setup(props, { emit }) {
     const formData = reactive({ ...props.modelValue });
     watch(
       formData,
       (newValue) => {
-        console.log("Hello, world");
         emit("update:modelValue", newValue, { deep: true }); // 深度监听
       },
       { deep: true }
     );
+
+    const formReset = () => {
+      // console.log("hello");
+      for (const key in formData) {
+        formData[key] = "";
+      }
+    };
     return {
       formData,
+      formReset,
     };
   },
 });

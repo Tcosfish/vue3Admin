@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-07 14:34:00
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-08 12:29:16
+ * @LastEditTime: 2022-06-08 17:27:29
  * @FilePath: \vue3admin\src\components\PageList\src\PageList.vue
 -->
 <template>
@@ -60,6 +60,7 @@ export default defineComponent({
   },
   setup(props) {
     const store = useStore();
+    console.log("props.pageName: ", props.pageName);
     store.dispatch("systemModule/getPageListAction", {
       pageName: props.pageName,
       queryInfo: {

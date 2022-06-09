@@ -2,25 +2,19 @@
  * @Author: tcosfish
  * @Date: 2022-06-03 22:13:37
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-08 16:19:24
- * @FilePath: \vue3admin\src\views\Main\System\Role\config\list.config.ts
+ * @LastEditTime: 2022-06-08 17:31:37
+ * @FilePath: \vue3admin\src\views\Main\System\Menu\config\list.config.ts
  */
 import { TF_Table } from "@/components/BaseList/index";
 
 export const listConfig: TF_Table = {
   // 列表名
-  title: "角色列表",
+  title: "菜单列表",
   // 列表列设置
   tableItems: [
     {
       prop: "name",
-      label: "用户名",
-      width: "120",
-      slot: "default",
-    },
-    {
-      prop: "intro",
-      label: "权限介绍",
+      label: "菜单名称",
       width: "120",
       slot: "default",
     },

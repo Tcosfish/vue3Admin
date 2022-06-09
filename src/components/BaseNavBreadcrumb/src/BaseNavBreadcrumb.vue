@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-04 11:20:34
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-04 16:11:12
+ * @LastEditTime: 2022-06-08 17:35:18
  * @FilePath: \vue3admin\src\components\BaseNavBreadcrumb\src\BaseNavBreadcrumb.vue
 -->
 
@@ -39,7 +39,4 @@ export default defineComponent({
 
 <style scoped>
 /* @import url(); 引入css类 */
-.tf-nav-breadcrumb {
-  padding-top: 10px;
-}
 </style>

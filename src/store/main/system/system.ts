@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-07 13:33:55
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-08 12:32:32
+ * @LastEditTime: 2022-06-08 17:26:36
  * @FilePath: \vue3admin\src\store\main\system\system.ts
  */
 import { getPageListData } from "@/network/main/system/system";
@@ -50,9 +50,9 @@ export const systemModule: Module<ISystemState, IRootState> = {
       { commit },
       payload: { pageName: string; queryInfo: any }
     ) {
+      console.log("pageName: ", payload.pageName);
       // 0. 配置 pageUrl
       const pageUrl = pageUrlMap.get(payload.pageName) ?? "";
-
       // 1. 发送网络请求获取 List 数据
       const pageResult = await getPageListData(pageUrl, payload.queryInfo);
       const { list, totalCount } = pageResult.data;
