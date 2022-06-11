@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-07 13:33:55
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-11 14:53:46
+ * @LastEditTime: 2022-06-11 23:56:06
  * @FilePath: \vue3admin\src\store\main\system\system.ts
  */
 import { deleteListData, getPageListData } from "@/network/main/system/system";
@@ -51,6 +51,7 @@ export const systemModule: Module<ISystemState, IRootState> = {
       payload: { pageName: string; queryInfo: any }
     ) {
       console.log("pageName: ", payload.pageName);
+      console.log("queryInfo: ", payload.queryInfo);
       // 0. 配置 pageUrl
       const realPageName = pageUrlMap.get(payload.pageName) ?? "";
       const pageUrl = `${realPageName}/list`;

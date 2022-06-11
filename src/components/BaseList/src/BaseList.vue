@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-03 12:12:30
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-11 11:19:08
+ * @LastEditTime: 2022-06-11 23:47:00
  * @FilePath: \vue3admin\src\components\BaseList\src\BaseList.vue
 -->
 <template>
@@ -55,10 +55,13 @@
       <slot name="list-footer">
         <el-pagination
           v-if="showPagination"
-          page-size="100"
-          small
-          layout="sizes, prev, pager, next, jumper, ->, total"
-          :total="100"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="page.currentPage"
+          :page-size="page.pageSize"
+          :page-sizes="[10, 20, 30]"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="listCount"
         />
       </slot>
     </div>
@@ -84,6 +87,10 @@ export default defineComponent({
       type: Array,
       require: true,
     },
+    listCount: {
+      type: Number,
+      default: 0,
+    },
     showIndexColumn: {
       type: Boolean,
       default: false,
@@ -100,15 +107,28 @@ export default defineComponent({
       type: Object,
       default: () => ({}),
     },
+    page: {
+      type: Object,
+      default: () => ({ currentPage: 0, pageSize: 10 }),
+    },
   },
-  emits: ["selectionChange"],
+  emits: ["selectionChange", "update:page"],
   setup(props, { emit }) {
     const handleSelectionChange = (value: any) => {
       emit("selectionChange", value); // 前面打开选择功能时, 发射 selectionChange 事件
     };
+    const handleCurrentChange = (currentPage: number) => {
+      emit("update:page", { ...props.page, currentPage });
+    };
+
+    const handleSizeChange = (pageSize: number) => {
+      emit("update:page", { ...props.page, pageSize });
+    };
 
     return {
       handleSelectionChange,
+      handleCurrentChange,
+      handleSizeChange,
     };
   },
 });

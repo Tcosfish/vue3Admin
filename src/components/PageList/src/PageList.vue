@@ -2,12 +2,17 @@
  * @Author: tcosfish
  * @Date: 2022-06-07 14:34:00
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-11 18:36:32
+ * @LastEditTime: 2022-06-11 23:52:27
  * @FilePath: \vue3admin\src\components\PageList\src\PageList.vue
 -->
 <template>
   <div class="page-list">
-    <base-list v-bind="listConfig" :listData="list">
+    <base-list
+      v-bind="listConfig"
+      :listData="list"
+      v-model:page="pageInfo"
+      :listCount="count"
+    >
       <!-- list-header 相关的插槽内容 -->
       <template #list-header-hander>
         <el-button
@@ -56,7 +61,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref } from "vue";
+import { defineComponent, computed, ref, watch } from "vue";
 import { useStore } from "vuex";
 import BaseList from "@/components/BaseList";
 import { getPageNameHandle } from "@/utils/getMenuHandle";
@@ -75,24 +80,38 @@ export default defineComponent({
   },
   emits: ["createClick", "editClick"],
   setup(props, { emit }) {
+    // 获取列表数据和数据量的相关内容
     const store = useStore();
-    console.log("props.pageName: ", props.pageName);
-    store.dispatch("systemModule/getPageListAction", {
-      pageName: props.pageName,
-      queryInfo: {
-        offset: 0,
-        size: 10,
-      },
-    });
+    const pageInfo = ref({ currentPage: 1, pageSize: 10 });
+    watch(pageInfo, () => getPageList());
+
+    const getPageList = (queryInfo: any = {}) => {
+      // if (getHandle("query")) return;
+      console.log(queryInfo);
+      store.dispatch("systemModule/getPageListAction", {
+        pageName: props.pageName,
+        queryInfo: {
+          offset: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,
+          size: pageInfo.value.pageSize,
+          ...queryInfo,
+        },
+      });
+    };
+    getPageList();
+
     const list = computed(
       () => store.state.systemModule[`${props.pageName}List`]
     );
     const count = computed(
       () => store.state.systemModule[`${props.pageName}Count`]
     );
+
+    // 获取用户权限的函数
     const getHandle = (handleName: string) => {
       return getPageNameHandle(props.pageName as string, handleName);
     };
+
+    // 单项删除函数
     const deleteClick = (ListData: any) => {
       console.log("delete loading...");
       store.dispatch("systemModule/deletePageDataAction", {
@@ -101,6 +120,7 @@ export default defineComponent({
       });
     };
 
+    // 判断和编辑相关函数
     const showDialogList = ref(false);
     const handleCreateClick = () => {
       showDialogList.value = !showDialogList.value;
@@ -113,7 +133,9 @@ export default defineComponent({
     return {
       list,
       count,
+      pageInfo,
       getHandle,
+      getPageList,
       deleteClick,
       editClick,
       handleCreateClick,

@@ -2,13 +2,19 @@
  * @Author: tcosfish
  * @Date: 2022-06-01 22:26:23
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-11 19:13:19
+ * @LastEditTime: 2022-06-12 00:15:26
  * @FilePath: \vue3admin\src\views\Main\System\User\User.vue
 -->
 <template>
   <div class="user">
-    <page-search :searchFormConfig="searchFormConfig" :pageName="pageName" />
+    <page-search
+      :searchFormConfig="searchFormConfig"
+      :pageName="pageName"
+      @handleFormQuery="queryClick"
+      @handleFormReset="resetClick"
+    />
     <page-list
+      ref="pageListRef"
       :listConfig="listConfig"
       :pageName="pageName"
       @createClick="createFormItem"
@@ -33,13 +39,18 @@ import { searchFormConfig } from "./config/search.config";
 import { dialogConfig } from "./config/dialog.config";
 import { listConfig } from "./config/list.config";
 
-import { usePage } from "@/hooks/use-page";
+import { usePageList } from "@/hooks/use-page-list";
+import { usePageSearch } from "@/hooks/use-page-search";
 
 export default defineComponent({
   name: "User",
   setup() {
-    const { pageName, pageModalRef, createFormItem, updateFormItem } =
-      usePage("user");
+    const pageName = "user";
+
+    const { pageListRef, queryClick, resetClick } = usePageSearch();
+
+    const { pageModalRef, createFormItem, updateFormItem } = usePageList();
+
     return {
       pageName,
       searchFormConfig,
@@ -48,6 +59,9 @@ export default defineComponent({
       createFormItem,
       pageModalRef,
       updateFormItem,
+      pageListRef,
+      queryClick,
+      resetClick,
     };
   },
   components: {

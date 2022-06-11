@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-07 10:40:25
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-11 17:56:00
+ * @LastEditTime: 2022-06-12 00:07:46
  * @FilePath: \vue3admin\src\components\PageSearch\src\PageSearch.vue
 -->
 <template>
@@ -51,8 +51,8 @@ export default defineComponent({
       require: true,
     },
   },
-  emits: [""],
-  setup(props) {
+  emits: ["handleFormQuery", "handleFormReset"],
+  setup(props, { emit }) {
     // 根据 search.config.js 动态创建对象
     const formItems = props.searchFormConfig?.formItems ?? [];
     const formOriginData: any = {};
@@ -63,11 +63,13 @@ export default defineComponent({
     let baseFormRef = ref<InstanceType<typeof BaseForm>>();
     const handleFormReset = () => {
       baseFormRef.value?.formReset();
+      emit("handleFormReset");
       console.log("表单已重置");
     };
 
     const handleFormQuery = () => {
       // console.log(formData.value);
+      emit("handleFormQuery", formData.value);
       console.log("搜索操作已执行");
     };
 
