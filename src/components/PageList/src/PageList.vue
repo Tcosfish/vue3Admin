@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-07 14:34:00
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-11 12:49:21
+ * @LastEditTime: 2022-06-11 18:36:32
  * @FilePath: \vue3admin\src\components\PageList\src\PageList.vue
 -->
 <template>
@@ -15,6 +15,7 @@
           size="small"
           icon="el-icon-plus"
           v-if="getHandle('create')"
+          @click="handleCreateClick"
           >新增
         </el-button>
         <el-button size="small" icon="el-icon-refresh"></el-button>
@@ -37,6 +38,7 @@
           size="mini"
           icon="el-icon-edit"
           v-if="getHandle('update')"
+          @click="editClick(scope.row)"
           >编辑</el-button
         >
         <el-button
@@ -54,7 +56,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from "vue";
+import { defineComponent, computed, ref } from "vue";
 import { useStore } from "vuex";
 import BaseList from "@/components/BaseList";
 import { getPageNameHandle } from "@/utils/getMenuHandle";
@@ -71,7 +73,8 @@ export default defineComponent({
       require: true,
     },
   },
-  setup(props) {
+  emits: ["createClick", "editClick"],
+  setup(props, { emit }) {
     const store = useStore();
     console.log("props.pageName: ", props.pageName);
     store.dispatch("systemModule/getPageListAction", {
@@ -92,13 +95,29 @@ export default defineComponent({
     };
     const deleteClick = (ListData: any) => {
       console.log("delete loading...");
-      store.dispatch("systemModule/deleteListData", ListData);
+      store.dispatch("systemModule/deletePageDataAction", {
+        pageName: props.pageName,
+        id: ListData.id,
+      });
+    };
+
+    const showDialogList = ref(false);
+    const handleCreateClick = () => {
+      showDialogList.value = !showDialogList.value;
+      emit("createClick", showDialogList.value);
+    };
+    const editClick = (listItem: any) => {
+      console.log("update loading....");
+      emit("editClick", listItem);
     };
     return {
       list,
       count,
       getHandle,
       deleteClick,
+      editClick,
+      handleCreateClick,
+      showDialogList,
     };
   },
   components: {

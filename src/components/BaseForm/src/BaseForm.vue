@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-03 09:55:10
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-09 20:57:12
+ * @LastEditTime: 2022-06-11 18:10:10
  * @FilePath: \vue3admin\src\components\BaseForm\src\BaseForm.vue
 -->
 <template>
@@ -110,8 +110,7 @@ export default defineComponent({
     );
 
     const formReset = () => {
-      // console.log("hello");
-      for (const key in formData) {
+      for (const key in formData.value) {
         formData.value[key] = "";
       }
     };

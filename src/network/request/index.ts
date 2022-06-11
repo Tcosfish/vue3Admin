@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-05-17 21:52:49
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-11 12:52:08
+ * @LastEditTime: 2022-06-11 13:10:59
  * @FilePath: \vue3admin\src\network\request\index.ts
  */
 
@@ -86,6 +86,42 @@ class BaseApiInstance {
       }
       return res;
     });
+  }
+
+  request_plus<T = any>(config: BaseApiConfig<T>): Promise<T> {
+    return new Promise((resolve, reject) => {
+      if (config.interceptors?.requestInterceptor) {
+        config = config.interceptors.requestInterceptor(config);
+      }
+      this.instance
+        .request<any, T>(config)
+        .then((res: any) => {
+          if (config.interceptors?.responseInterceptor) {
+            res = config.interceptors.responseInterceptor(res);
+          }
+          resolve(res);
+        })
+        .catch((err) => {
+          reject(err);
+          return err;
+        });
+    });
+  }
+
+  get<T = any>(config: BaseApiConfig<T>): Promise<T> {
+    return this.request_plus<T>({ ...config, method: "GET" });
+  }
+
+  post<T = any>(config: BaseApiConfig<T>): Promise<T> {
+    return this.request_plus<T>({ ...config, method: "POST" });
+  }
+
+  delete<T = any>(config: BaseApiConfig<T>): Promise<T> {
+    return this.request_plus<T>({ ...config, method: "DELETE" });
+  }
+
+  patch<T = any>(config: BaseApiConfig<T>): Promise<T> {
+    return this.request_plus<T>({ ...config, method: "PATCH" });
   }
 }
 

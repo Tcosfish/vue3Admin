@@ -2,10 +2,10 @@
  * @Author: tcosfish
  * @Date: 2022-06-07 13:33:55
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-08 17:26:36
+ * @LastEditTime: 2022-06-11 14:53:46
  * @FilePath: \vue3admin\src\store\main\system\system.ts
  */
-import { getPageListData } from "@/network/main/system/system";
+import { deleteListData, getPageListData } from "@/network/main/system/system";
 import { IRootState } from "@/store/types";
 import { Module } from "vuex";
 
@@ -13,10 +13,10 @@ import { ISystemState } from "./types";
 
 // 配置 PageName 对应的 PageURl
 const pageUrlMap = new Map([
-  ["user", "users/list"],
-  ["role", "role/list"],
-  ["department", "department/list"],
-  ["menu", "menu/list"],
+  ["user", "users"],
+  ["role", "role"],
+  ["department", "department"],
+  ["menu", "menu"],
 ]);
 
 export const systemModule: Module<ISystemState, IRootState> = {
@@ -52,7 +52,8 @@ export const systemModule: Module<ISystemState, IRootState> = {
     ) {
       console.log("pageName: ", payload.pageName);
       // 0. 配置 pageUrl
-      const pageUrl = pageUrlMap.get(payload.pageName) ?? "";
+      const realPageName = pageUrlMap.get(payload.pageName) ?? "";
+      const pageUrl = `${realPageName}/list`;
       // 1. 发送网络请求获取 List 数据
       const pageResult = await getPageListData(pageUrl, payload.queryInfo);
       const { list, totalCount } = pageResult.data;
@@ -61,6 +62,27 @@ export const systemModule: Module<ISystemState, IRootState> = {
       commit("changeCount", {
         pageName: payload.pageName,
         newCount: totalCount,
+      });
+    },
+
+    async deletePageDataAction(
+      context,
+      payload: { pageName: string; id: number }
+    ) {
+      // 拼接 pageUrl
+      const { pageName, id } = payload;
+      const realPageName = pageUrlMap.get(pageName) ?? "";
+      const pageUrl = `/${realPageName}/${id}`;
+      console.log(pageUrl);
+      // 执行删除操作
+      await deleteListData(pageUrl);
+      // 重新获取最新的数据
+      context.dispatch("getPageListAction", {
+        pageName,
+        queryInfo: {
+          offset: 0,
+          size: 10,
+        },
       });
     },
   },

@@ -2,12 +2,13 @@
  * @Author: tcosfish
  * @Date: 2022-06-03 12:00:46
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-04 16:42:43
+ * @LastEditTime: 2022-06-11 15:22:11
  * @FilePath: \vue3admin\src\views\Main\System\User\config\search.config.ts
  */
 import { IForm } from "@/components/BaseForm";
 
 export const searchFormConfig: IForm = {
+  formName: "高级检索",
   formItems: [
     {
       type: "input",
@@ -65,4 +66,6 @@ export const searchFormConfig: IForm = {
     },
   ],
   itemStyle: { padding: "10px 40px" },
+  showFooter: true,
+  showHeader: true,
 };

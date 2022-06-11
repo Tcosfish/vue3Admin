@@ -2,16 +2,16 @@
  * @Author: tcosfish
  * @Date: 2022-06-07 10:40:25
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-11 12:41:10
+ * @LastEditTime: 2022-06-11 17:56:00
  * @FilePath: \vue3admin\src\components\PageSearch\src\PageSearch.vue
 -->
 <template>
   <div class="page-search">
     <base-form v-bind="searchFormConfig" v-model="formData" ref="baseFormRef">
-      <template #header>
-        <h1 class="search-header">高级检索</h1>
+      <template #header v-if="searchFormConfig.showHeader">
+        <h1 class="search-header">{{ searchFormConfig.formName }}</h1>
       </template>
-      <template #footer>
+      <template #footer v-if="searchFormConfig.showFooter">
         <div class="handle-search-button">
           <el-button
             size="small"
@@ -60,11 +60,9 @@ export default defineComponent({
       formOriginData[item.model] = "";
     }
     let formData = ref(formOriginData);
-    let baseFormRef = ref(null);
+    let baseFormRef = ref<InstanceType<typeof BaseForm>>();
     const handleFormReset = () => {
-      (baseFormRef?.value as any)?.formReset();
-      // baseFormRef?.value?.formReset();
-
+      baseFormRef.value?.formReset();
       console.log("表单已重置");
     };
 

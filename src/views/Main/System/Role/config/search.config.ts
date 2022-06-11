@@ -2,12 +2,13 @@
  * @Author: tcosfish
  * @Date: 2022-06-03 12:00:46
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-08 17:52:30
+ * @LastEditTime: 2022-06-11 15:26:10
  * @FilePath: \vue3admin\src\views\Main\System\Role\config\search.config.ts
  */
 import { IForm } from "@/components/BaseForm";
 
 export const searchFormConfig: IForm = {
+  formName: "Role高级检索",
   formItems: [
     {
       type: "input",

@@ -48,8 +48,8 @@ const loginModule: Module<ILoginState, IRootState> = {
       });
     },
     changeUserMenuHandle(state, userMenuHandle: string[]) {
-      state.userMenuHandle = userMenuHandle
-    }
+      state.userMenuHandle = userMenuHandle;
+    },
   },
   actions: {
     async accountLoginAction({ commit }, payload: any) {
@@ -75,8 +75,8 @@ const loginModule: Module<ILoginState, IRootState> = {
       MyCache.setCache("userMenu", userMenu);
 
       // 4. 获取用户菜单权限
-      const userMenuHandle = getMenuHandle(userMenu)
-      commit("changeUserMenuHandle", userMenuHandle)
+      const userMenuHandle = getMenuHandle(userMenu);
+      commit("changeUserMenuHandle", userMenuHandle);
 
       // 5. 页面跳转
       router.push("/main");
@@ -96,7 +96,10 @@ const loginModule: Module<ILoginState, IRootState> = {
       commit("changeToken", MyCache.getCache("token"));
       commit("changeUserInfo", MyCache.getCache("userInfo"));
       commit("changeUserMenu", MyCache.getCache("userMenu"));
-      commit("changeUserMenuHandle", getMenuHandle(MyCache.getCache("userMenu")))
+      commit(
+        "changeUserMenuHandle",
+        getMenuHandle(MyCache.getCache("userMenu"))
+      );
     },
   },
   getters: {},
