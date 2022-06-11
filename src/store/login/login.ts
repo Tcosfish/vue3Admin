@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-05-21 16:01:47
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-01 23:49:42
+ * @LastEditTime: 2022-06-11 12:08:29
  * @FilePath: \vue3admin\src\store\login\login.ts
  */
 import { Module } from "vuex";
@@ -17,6 +17,7 @@ import {
 } from "../../network/login/index";
 import { mapMenuToRouter } from "@/utils/mapMenu";
 import router from "@/router";
+import { getMenuHandle } from "@/utils/getMenuHandle";
 
 // Module接口的泛型没有默认值, 必传, 一位当前状态模块的 state类型, 二维父状态模块的 state类型
 const loginModule: Module<ILoginState, IRootState> = {
@@ -26,6 +27,7 @@ const loginModule: Module<ILoginState, IRootState> = {
       token: "",
       userInfo: {},
       userMenu: {},
+      userMenuHandle: [],
     };
   },
   mutations: {
@@ -45,6 +47,9 @@ const loginModule: Module<ILoginState, IRootState> = {
         router.addRoute("Main", route);
       });
     },
+    changeUserMenuHandle(state, userMenuHandle: string[]) {
+      state.userMenuHandle = userMenuHandle
+    }
   },
   actions: {
     async accountLoginAction({ commit }, payload: any) {
@@ -66,11 +71,14 @@ const loginModule: Module<ILoginState, IRootState> = {
       // 3. 请求用户菜单
       const userMenuResult = await RequestUserMenuById(userInfo.role.id);
       const userMenu = userMenuResult.data;
-      console.log(userMenu);
       commit("changeUserMenu", userMenu);
       MyCache.setCache("userMenu", userMenu);
 
-      // 4. 页面跳转
+      // 4. 获取用户菜单权限
+      const userMenuHandle = getMenuHandle(userMenu)
+      commit("changeUserMenuHandle", userMenuHandle)
+
+      // 5. 页面跳转
       router.push("/main");
     },
     async phoneLoginAction({ commit }, payload: any) {
@@ -88,6 +96,7 @@ const loginModule: Module<ILoginState, IRootState> = {
       commit("changeToken", MyCache.getCache("token"));
       commit("changeUserInfo", MyCache.getCache("userInfo"));
       commit("changeUserMenu", MyCache.getCache("userMenu"));
+      commit("changeUserMenuHandle", getMenuHandle(MyCache.getCache("userMenu")))
     },
   },
   getters: {},

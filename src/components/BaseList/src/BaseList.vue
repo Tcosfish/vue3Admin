@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-03 12:12:30
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-08 11:42:42
+ * @LastEditTime: 2022-06-11 11:19:08
  * @FilePath: \vue3admin\src\components\BaseList\src\BaseList.vue
 -->
 <template>
@@ -17,7 +17,12 @@
         </div>
       </slot>
     </div>
-    <el-table :data="listData" border @selection-change="handleSelectionChange">
+    <el-table
+      :data="listData"
+      border
+      @selection-change="handleSelectionChange"
+      v-bind="childrenProps"
+    >
       <el-table-column
         v-if="showSelectColumn"
         type="selection"
@@ -48,12 +53,13 @@
     </el-table>
     <div class="list-footer">
       <slot name="list-footer">
-        <!-- <el-pagination
+        <el-pagination
+          v-if="showPagination"
           page-size="100"
           small
           layout="sizes, prev, pager, next, jumper, ->, total"
           :total="100"
-        /> -->
+        />
       </slot>
     </div>
   </div>
@@ -85,6 +91,14 @@ export default defineComponent({
     showSelectColumn: {
       type: Boolean,
       default: false,
+    },
+    showPagination: {
+      type: Boolean,
+      default: false,
+    },
+    childrenProps: {
+      type: Object,
+      default: () => ({}),
     },
   },
   emits: ["selectionChange"],

@@ -2,13 +2,13 @@
  * @Author: tcosfish
  * @Date: 2022-06-01 22:26:23
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-08 12:13:43
+ * @LastEditTime: 2022-06-11 12:35:38
  * @FilePath: \vue3admin\src\views\Main\System\User\User.vue
 -->
 <template>
   <div class="user">
-    <page-search :searchFormConfig="searchFormConfig" />
-    <page-list :listConfig="listConfig" :pageName="'user'" />
+    <page-search :searchFormConfig="searchFormConfig" :pageName="pageName" />
+    <page-list :listConfig="listConfig" :pageName="pageName" />
   </div>
 </template>
 
@@ -22,7 +22,9 @@ import { listConfig } from "./config/list.config";
 export default defineComponent({
   name: "User",
   setup() {
+    const pageName = "user";
     return {
+      pageName,
       searchFormConfig,
       listConfig,
     };

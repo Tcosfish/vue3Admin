@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-03 22:13:37
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-07 22:26:28
+ * @LastEditTime: 2022-06-09 21:22:20
  * @FilePath: \vue3admin\src\views\Main\System\User\config\list.config.ts
  */
 import { TF_Table } from "@/components/BaseList/index";
@@ -60,4 +60,6 @@ export const listConfig: TF_Table = {
   showIndexColumn: true,
   // 是否显示行选择
   showSelectColumn: true,
+  // 是否显示分页
+  showPagination: false,
 };

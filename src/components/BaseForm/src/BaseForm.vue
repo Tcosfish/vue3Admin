@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-03 09:55:10
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-09 18:44:15
+ * @LastEditTime: 2022-06-09 20:57:12
  * @FilePath: \vue3admin\src\components\BaseForm\src\BaseForm.vue
 -->
 <template>
@@ -63,7 +63,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, reactive, watch } from "vue";
+import { defineComponent, PropType, ref, watch } from "vue";
 import { IFormItem } from "../types";
 
 export default defineComponent({
@@ -100,7 +100,7 @@ export default defineComponent({
   },
   emits: ["update:modelValue", "emitBaseForm"],
   setup(props, { emit }) {
-    const formData = reactive({ ...props.modelValue });
+    const formData = ref({ ...props.modelValue });
     watch(
       formData,
       (newValue) => {
@@ -112,7 +112,7 @@ export default defineComponent({
     const formReset = () => {
       // console.log("hello");
       for (const key in formData) {
-        formData[key] = "";
+        formData.value[key] = "";
       }
     };
     return {

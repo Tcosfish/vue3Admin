@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-03 13:23:34
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-07 21:38:55
+ * @LastEditTime: 2022-06-11 11:20:25
  * @FilePath: \vue3admin\src\components\BaseList\types\index.ts
  */
 
@@ -19,6 +19,13 @@ interface TF_Table {
   tableItems: TableItem[];
   showIndexColumn?: boolean;
   showSelectColumn?: boolean;
+  showPagination?: boolean;
+  childrenProps?: {
+    rowKey: "id";
+    treeProp: {
+      children: "children";
+    };
+  };
 }
 
 export { TF_Table };

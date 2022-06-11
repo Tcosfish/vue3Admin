@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-07 14:34:00
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-08 17:27:29
+ * @LastEditTime: 2022-06-11 12:49:21
  * @FilePath: \vue3admin\src\components\PageList\src\PageList.vue
 -->
 <template>
@@ -10,7 +10,11 @@
     <base-list v-bind="listConfig" :listData="list">
       <!-- list-header 相关的插槽内容 -->
       <template #list-header-hander>
-        <el-button type="primary" size="small" icon="el-icon-plus"
+        <el-button
+          type="primary"
+          size="small"
+          icon="el-icon-plus"
+          v-if="getHandle('create')"
           >新增
         </el-button>
         <el-button size="small" icon="el-icon-refresh"></el-button>
@@ -27,14 +31,22 @@
       <template #updateAt="scope">
         {{ $filters.formatTimeUTC(scope.row.updateAt) }}
       </template>
-      <template #operations>
-        <el-button type="text" size="mini" icon="el-icon-edit">编辑</el-button>
+      <template #operations="scope">
         <el-button
           type="text"
           size="mini"
-          icon="el-icon-refresh"
+          icon="el-icon-edit"
+          v-if="getHandle('update')"
+          >编辑</el-button
+        >
+        <el-button
+          type="text"
+          size="mini"
+          icon="el-icon-delete"
           style="color: #f56c6c"
-          >刷新
+          v-if="getHandle('delete')"
+          @click="deleteClick(scope.row)"
+          >删除
         </el-button>
       </template>
     </base-list>
@@ -45,6 +57,7 @@
 import { defineComponent, computed } from "vue";
 import { useStore } from "vuex";
 import BaseList from "@/components/BaseList";
+import { getPageNameHandle } from "@/utils/getMenuHandle";
 
 export default defineComponent({
   name: "PageList",
@@ -74,9 +87,18 @@ export default defineComponent({
     const count = computed(
       () => store.state.systemModule[`${props.pageName}Count`]
     );
+    const getHandle = (handleName: string) => {
+      return getPageNameHandle(props.pageName as string, handleName);
+    };
+    const deleteClick = (ListData: any) => {
+      console.log("delete loading...");
+      store.dispatch("systemModule/deleteListData", ListData);
+    };
     return {
       list,
       count,
+      getHandle,
+      deleteClick,
     };
   },
   components: {

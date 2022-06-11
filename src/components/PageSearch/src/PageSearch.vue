@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-07 10:40:25
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-09 20:14:00
+ * @LastEditTime: 2022-06-11 12:41:10
  * @FilePath: \vue3admin\src\components\PageSearch\src\PageSearch.vue
 -->
 <template>
@@ -20,7 +20,12 @@
           >
             重置
           </el-button>
-          <el-button type="primary" size="small" icon="el-icon-search">
+          <el-button
+            type="primary"
+            size="small"
+            icon="el-icon-search"
+            @click="handleFormQuery"
+          >
             搜索
           </el-button>
         </div>
@@ -30,8 +35,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from "vue";
+import { defineComponent, ref } from "vue";
 import BaseForm from "@/components/BaseForm";
+import { getPageNameHandle } from "@/utils/getMenuHandle";
 
 export default defineComponent({
   name: "PageSearch",
@@ -40,7 +46,12 @@ export default defineComponent({
       type: Object,
       require: true,
     },
+    pageName: {
+      type: String,
+      require: true,
+    },
   },
+  emits: [""],
   setup(props) {
     // 根据 search.config.js 动态创建对象
     const formItems = props.searchFormConfig?.formItems ?? [];
@@ -48,18 +59,30 @@ export default defineComponent({
     for (const item of formItems) {
       formOriginData[item.model] = "";
     }
-    let formData = reactive(formOriginData);
+    let formData = ref(formOriginData);
     let baseFormRef = ref(null);
     const handleFormReset = () => {
       (baseFormRef?.value as any)?.formReset();
       // baseFormRef?.value?.formReset();
+
       console.log("表单已重置");
+    };
+
+    const handleFormQuery = () => {
+      // console.log(formData.value);
+      console.log("搜索操作已执行");
+    };
+
+    const getHandle = (handleName: string) => {
+      return getPageNameHandle(props.pageName as string, handleName);
     };
 
     return {
       baseFormRef,
       formData,
       handleFormReset,
+      handleFormQuery,
+      getHandle,
     };
   },
   components: {

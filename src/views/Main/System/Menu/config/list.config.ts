@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-03 22:13:37
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-08 17:31:37
+ * @LastEditTime: 2022-06-10 19:05:38
  * @FilePath: \vue3admin\src\views\Main\System\Menu\config\list.config.ts
  */
 import { TF_Table } from "@/components/BaseList/index";
@@ -18,6 +18,9 @@ export const listConfig: TF_Table = {
       width: "120",
       slot: "default",
     },
+    { prop: "url", label: "菜单url", width: "100", slot: "default" },
+    { prop: "icon", label: "菜单icon", width: "100", slot: "default" },
+    { prop: "permission", label: "按钮权限", width: "100", slot: "default" },
     {
       prop: "createAt",
       label: "创建时间",
@@ -38,7 +41,13 @@ export const listConfig: TF_Table = {
     },
   ],
   // 是否显示序号
-  showIndexColumn: true,
+  showIndexColumn: false,
   // 是否显示行选择
-  showSelectColumn: true,
+  showSelectColumn: false,
+  childrenProps: {
+    rowKey: "id",
+    treeProp: {
+      children: "children",
+    },
+  },
 };
