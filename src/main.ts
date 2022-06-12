@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-05-09 17:46:51
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-07 22:20:05
+ * @LastEditTime: 2022-06-12 16:20:23
  * @FilePath: \vue3admin\src\main.ts
  */
 import { createApp } from "vue";
@@ -21,5 +21,6 @@ app.use(ElementPlus);
 app.use(globalRegister);
 app.use(store);
 store.dispatch("loginModule/setStorage");
+store.dispatch("getInitialData");
 app.use(router);
 app.mount("#app");

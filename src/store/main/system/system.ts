@@ -2,10 +2,15 @@
  * @Author: tcosfish
  * @Date: 2022-06-07 13:33:55
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-11 23:56:06
+ * @LastEditTime: 2022-06-12 18:08:59
  * @FilePath: \vue3admin\src\store\main\system\system.ts
  */
-import { deleteListData, getPageListData } from "@/network/main/system/system";
+import {
+  deleteListData,
+  getPageListData,
+  createPageData,
+  editPageData,
+} from "@/network/main/system/system";
 import { IRootState } from "@/store/types";
 import { Module } from "vuex";
 
@@ -50,10 +55,10 @@ export const systemModule: Module<ISystemState, IRootState> = {
       { commit },
       payload: { pageName: string; queryInfo: any }
     ) {
-      console.log("pageName: ", payload.pageName);
-      console.log("queryInfo: ", payload.queryInfo);
+      // console.log("pageName: ", payload.pageName);
+      // console.log("queryInfo: ", payload.queryInfo);
       // 0. 配置 pageUrl
-      const realPageName = pageUrlMap.get(payload.pageName) ?? "";
+      const realPageName = pageUrlMap.get(payload.pageName) ?? payload.pageName;
       const pageUrl = `${realPageName}/list`;
       // 1. 发送网络请求获取 List 数据
       const pageResult = await getPageListData(pageUrl, payload.queryInfo);
@@ -79,6 +84,45 @@ export const systemModule: Module<ISystemState, IRootState> = {
       await deleteListData(pageUrl);
       // 重新获取最新的数据
       context.dispatch("getPageListAction", {
+        pageName,
+        queryInfo: {
+          offset: 0,
+          size: 10,
+        },
+      });
+    },
+
+    async createPageDataAction(
+      { dispatch },
+      payload: { pageName: string; newData: any }
+    ) {
+      // 1. 发送请求
+      const { pageName, newData } = payload;
+      const realPageName = pageUrlMap.get(pageName) ?? payload.pageName;
+      const pageUrl = `/${realPageName}`;
+      await createPageData(pageUrl, newData);
+      // 2. 重新获取数据
+      dispatch("getPageListAction", {
+        pageName,
+        queryInfo: {
+          offset: 0,
+          size: 10,
+        },
+      });
+    },
+
+    async editPageDataAction(
+      { dispatch },
+      payload: { pageName: string; editData: any; id: number }
+    ) {
+      // 1. 发送请求
+      const { pageName, editData, id } = payload;
+      const realPageName = pageUrlMap.get(pageName) ?? payload.pageName;
+      const pageUrl = `/${realPageName}/${id}`;
+      console.log(editData);
+      await editPageData(pageUrl, editData);
+      // 2. 重新获取数据
+      dispatch("getPageListAction", {
         pageName,
         queryInfo: {
           offset: 0,

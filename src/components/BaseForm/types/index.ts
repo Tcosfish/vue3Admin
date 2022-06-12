@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-03 10:15:29
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-11 15:21:44
+ * @LastEditTime: 2022-06-12 15:26:28
  * @FilePath: \vue3admin\src\components\BaseForm\types\index.ts
  */
 
@@ -16,6 +16,7 @@ export interface IFormItem {
   placeholder?: string;
   options?: any[]; // 只对 select
   otherOptions?: any; // 不同表单组件的特有配置
+  isHidden?: boolean;
 }
 
 export interface IForm {

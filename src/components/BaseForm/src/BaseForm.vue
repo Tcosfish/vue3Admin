@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-03 09:55:10
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-11 18:10:10
+ * @LastEditTime: 2022-06-12 16:37:12
  * @FilePath: \vue3admin\src\components\BaseForm\src\BaseForm.vue
 -->
 <template>
@@ -15,6 +15,7 @@
         <template v-for="item in formItems" :key="item.label">
           <el-col :span="8" v-bind="colLayout">
             <el-form-item
+              v-if="!item.isHidden"
               :label="item.label"
               :rules="item.rules"
               :style="itemStyle"

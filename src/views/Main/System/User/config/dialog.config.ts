@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-11 15:10:45
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-11 18:48:37
+ * @LastEditTime: 2022-06-12 15:53:05
  * @FilePath: \vue3admin\src\views\Main\System\User\config\dialog.config.ts
  */
 import { IForm } from "@/components/BaseForm";
@@ -30,6 +30,7 @@ export const dialogConfig: IForm = {
       label: "密码",
       rules: [],
       placeholder: "请输入密码",
+      isHidden: true,
     },
     {
       type: "input",
@@ -37,6 +38,22 @@ export const dialogConfig: IForm = {
       label: "电话号码",
       rules: [],
       placeholder: "请输入电话号码",
+    },
+    {
+      type: "select",
+      model: "departmentId",
+      label: "选择部门",
+      rules: [],
+      placeholder: "请选择部门",
+      options: [],
+    },
+    {
+      type: "select",
+      model: "roleId",
+      label: "选择角色",
+      rules: [],
+      placeholder: "请选择角色",
+      options: [],
     },
   ],
   labelWidth: "100px",
