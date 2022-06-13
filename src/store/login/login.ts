@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-05-21 16:01:47
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-11 12:08:29
+ * @LastEditTime: 2022-06-13 21:09:20
  * @FilePath: \vue3admin\src\store\login\login.ts
  */
 import { Module } from "vuex";
@@ -52,7 +52,7 @@ const loginModule: Module<ILoginState, IRootState> = {
     },
   },
   actions: {
-    async accountLoginAction({ commit }, payload: any) {
+    async accountLoginAction({ commit, dispatch }, payload: any) {
       // 由此处来执行请求操作
       console.log("Vuex的login模块中的accountLoginAction方法已被调用...");
       // 1. 获取用户的 token
@@ -61,6 +61,9 @@ const loginModule: Module<ILoginState, IRootState> = {
       } = await RequestAccountLogin(payload);
       MyCache.setCache("token", token);
       commit("changeToken", token);
+
+      // 发送初始化的请求, 获取完整的 Role/department, 以便生成
+      dispatch("getInitialData", null, { root: true }); // 调用根中的异步请求
 
       // 2. 根据 ID 请求用户信息
       const userInfoResult = await RequestUserInfoById(id);
@@ -92,14 +95,21 @@ const loginModule: Module<ILoginState, IRootState> = {
       console.log(result);
     },
     // 页面刷新后就要调用, 保持 localStorage 与 Vuex 一致
-    setStorage({ commit }) {
-      commit("changeToken", MyCache.getCache("token"));
-      commit("changeUserInfo", MyCache.getCache("userInfo"));
-      commit("changeUserMenu", MyCache.getCache("userMenu"));
-      commit(
-        "changeUserMenuHandle",
-        getMenuHandle(MyCache.getCache("userMenu"))
-      );
+    setStorage({ commit, dispatch }) {
+      const token = MyCache.getCache("token");
+      if (token) {
+        commit("changeToken", token);
+        dispatch("getInitialData", null, { root: true });
+      }
+      const userInfo = MyCache.getCache("userInfo");
+      if (userInfo) {
+        commit("changeUserInfo", userInfo);
+      }
+      const userMenu = MyCache.getCache("userMenu");
+      if (userMenu) {
+        commit("changeUserMenu", userMenu);
+        commit("changeUserMenuHandle", getMenuHandle(userMenu));
+      }
     },
   },
   getters: {},

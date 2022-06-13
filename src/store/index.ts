@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-05-09 17:46:51
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-12 16:18:20
+ * @LastEditTime: 2022-06-13 14:20:01
  * @FilePath: \vue3admin\src\store\index.ts
  */
 import { createStore } from "vuex";
@@ -20,6 +20,7 @@ export default createStore<IRootState>({
       age: 18,
       entireDepartment: [],
       entireRole: [],
+      entireMenu: [],
     };
   },
   mutations: {
@@ -28,6 +29,9 @@ export default createStore<IRootState>({
     },
     changeEntireRole(state, entireRole: any[]) {
       state.entireRole = entireRole;
+    },
+    changeEntireMenu(state, entireMenu: any[]) {
+      state.entireMenu = entireMenu;
     },
   },
   actions: {
@@ -45,9 +49,12 @@ export default createStore<IRootState>({
         offset: 0,
         size: 1000,
       });
+      const menuResult = await getPageListData_plus("/menu/list", {});
+      const { list: menuList } = menuResult.data;
       // 保存数据
       commit("changeEntireDepartment", departmentList);
       commit("changeEntireRole", roleList);
+      commit("changeEntireMenu", menuList);
     },
   },
   modules: {

@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-03 12:00:46
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-11 15:26:10
+ * @LastEditTime: 2022-06-13 13:50:19
  * @FilePath: \vue3admin\src\views\Main\System\Role\config\search.config.ts
  */
 import { IForm } from "@/components/BaseForm";
@@ -39,4 +39,6 @@ export const searchFormConfig: IForm = {
     },
   ],
   itemStyle: { padding: "10px 40px" },
+  showHeader: true,
+  showFooter: true,
 };

@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-07 14:00:40
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-12 18:25:02
+ * @LastEditTime: 2022-06-12 18:47:50
  * @FilePath: \vue3admin\src\network\main\system\system.ts
  */
 
@@ -42,7 +42,6 @@ export function createPageData(url: string, newData: any) {
 }
 
 export function editPageData(url: string, editData: any) {
-  console.log(editData);
   return coderWhyApi.patch<IDataType>({
     url: url,
     data: editData,

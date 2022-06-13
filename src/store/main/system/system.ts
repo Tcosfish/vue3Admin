@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-07 13:33:55
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-12 18:08:59
+ * @LastEditTime: 2022-06-12 18:48:45
  * @FilePath: \vue3admin\src\store\main\system\system.ts
  */
 import {
@@ -119,7 +119,6 @@ export const systemModule: Module<ISystemState, IRootState> = {
       const { pageName, editData, id } = payload;
       const realPageName = pageUrlMap.get(pageName) ?? payload.pageName;
       const pageUrl = `/${realPageName}/${id}`;
-      console.log(editData);
       await editPageData(pageUrl, editData);
       // 2. 重新获取数据
       dispatch("getPageListAction", {

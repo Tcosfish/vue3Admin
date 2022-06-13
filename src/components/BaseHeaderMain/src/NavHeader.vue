@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-05-31 21:41:54
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-08 17:36:56
+ * @LastEditTime: 2022-06-13 13:17:32
  * @FilePath: \vue3admin\src\components\BaseHeaderMain\src\NavHeader.vue
 -->
 <template>
@@ -13,10 +13,7 @@
       @click="handFoldChange"
     ></i>
     <base-nav-breadcrumb :breadcrumbs="breadcrumbs" />
-    <div class="nav-header-content">
-      <nav-user-info />
-      <span style="padding-left: 5px">tcosfish</span>
-    </div>
+    <nav-user-info />
   </div>
 </template>
 
@@ -71,10 +68,5 @@ export default defineComponent({
 .fold-menu {
   font-size: 30px;
   cursor: pointer;
-}
-.nav-header-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 </style>

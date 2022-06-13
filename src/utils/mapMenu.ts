@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-01 22:43:23
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-04 15:59:26
+ * @LastEditTime: 2022-06-13 21:10:52
  * @FilePath: \vue3admin\src\utils\mapMenu.ts
  */
 
@@ -66,4 +66,19 @@ export function temporaryTool(
       return menu;
     }
   }
+}
+
+export function getMenuLeafKey(menuList: any[]) {
+  const leafKeys: number[] = [];
+  const _recurseGetLeaf = (menuList: any[]) => {
+    for (const menu of menuList) {
+      if (menu.children) {
+        _recurseGetLeaf(menu.children);
+      } else {
+        leafKeys.push(menu.id);
+      }
+    }
+  };
+  _recurseGetLeaf(menuList);
+  return leafKeys;
 }

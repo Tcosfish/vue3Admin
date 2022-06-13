@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-11 17:20:21
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-12 18:06:55
+ * @LastEditTime: 2022-06-13 14:38:02
  * @FilePath: \vue3admin\src\components\PageDialog\src\PageDialog.vue
 -->
 <template>
@@ -14,6 +14,7 @@
       center
     >
       <base-form v-bind="dialogConfig" v-model="modalFormData"></base-form>
+      <slot></slot>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="showModal = false">退出</el-button>
@@ -39,6 +40,10 @@ export default defineComponent({
     pageName: {
       type: String,
       require: true,
+    },
+    otherInfo: {
+      type: Object,
+      default: () => ({}),
     },
     isCreate: {
       type: Boolean,
@@ -76,16 +81,15 @@ export default defineComponent({
       // 区分新建和编辑
       if (props.isCreate) {
         console.log("新建");
-        console.log(props.pageName);
         store.dispatch("systemModule/createPageDataAction", {
           pageName: props.pageName,
-          newData: { ...modalFormData.value },
+          newData: { ...modalFormData.value, ...props.otherInfo },
         });
       } else {
         console.log("编辑");
         store.dispatch("systemModule/editPageDataAction", {
           pageName: props.pageName,
-          editData: { ...modalFormData.value },
+          editData: { ...modalFormData.value, ...props.otherInfo },
           id: modalFormData.value.id,
         });
       }

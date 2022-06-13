@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-05-21 16:06:35
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-12 16:07:05
+ * @LastEditTime: 2022-06-13 14:19:17
  * @FilePath: \vue3admin\src\store\types.ts
  */
 
@@ -14,6 +14,7 @@ export interface IRootState {
   age: number;
   entireDepartment: any[];
   entireRole: any[];
+  entireMenu: any[];
 }
 
 export interface IRootWithModule {
