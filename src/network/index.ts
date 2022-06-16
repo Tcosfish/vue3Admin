@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-05-11 10:35:16
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-05-31 16:48:18
+ * @LastEditTime: 2022-06-16 12:28:34
  * @FilePath: \vue3admin\src\network\index.ts
  */
 
@@ -20,10 +20,10 @@ const coderWhyApi = new BaseApiInstance({
       if (token) {
         if (config.headers) config.headers.Authorization = `Bearer ${token}`;
       }
-      console.log(
-        "%c 实例的请求成功的拦截!",
-        "color: green; background: white"
-      );
+      // console.log(
+      //   "%c 实例的请求成功的拦截!",
+      //   "color: green; background: white"
+      // );
       return config;
     },
     requestInterceptorsCatch: (err) => {
@@ -31,10 +31,10 @@ const coderWhyApi = new BaseApiInstance({
       return err;
     },
     responseInterceptor: (res) => {
-      console.log(
-        "%c 实例的响应成功的拦截!",
-        "color: green; background: white"
-      );
+      // console.log(
+      //   "%c 实例的响应成功的拦截!",
+      //   "color: green; background: white"
+      // );
       return res;
     },
     responseInterceptorsCatch: (err) => {

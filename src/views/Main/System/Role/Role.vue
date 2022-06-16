@@ -2,7 +2,7 @@
  * @Author: tcosfish
  * @Date: 2022-06-01 22:27:22
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-13 21:25:05
+ * @LastEditTime: 2022-06-16 10:51:13
  * @FilePath: \vue3admin\src\views\Main\System\Role\Role.vue
 -->
 <template>
@@ -43,7 +43,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, nextTick, onUpdated } from "vue";
+import { defineComponent, ref, computed, nextTick } from "vue";
 import { useStore } from "vuex";
 import { getMenuLeafKey } from "@/utils/mapMenu";
 

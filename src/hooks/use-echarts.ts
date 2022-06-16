@@ -15,5 +15,5 @@ import * as echarts from "echarts";
  * @return {*} Echarts实例
  */
 export function useEcharts(realDom: any, theme?: string, options?: any) {
-  return echarts.init(realDom, theme, options)
+  return echarts.init(realDom, theme, options);
 }

@@ -2,14 +2,15 @@
  * @Author: tcosfish
  * @Date: 2022-05-09 17:46:51
  * @LastEditors: tcosfish
- * @LastEditTime: 2022-06-13 14:20:01
+ * @LastEditTime: 2022-06-16 12:24:29
  * @FilePath: \vue3admin\src\store\index.ts
  */
-import { createStore } from "vuex";
-import { IRootState } from "./types";
+import { createStore, Store, useStore as useVuexStore } from "vuex";
+import { IRootState, IStoreType } from "./types";
 
 import { loginModule } from "./login/login";
 import { systemModule } from "./main/system/system";
+import { analysisModule } from "./main/analysis/analysis";
 import { getPageListData_plus } from "@/network/main/system/system";
 
 // 记得指定类型
@@ -60,5 +61,10 @@ export default createStore<IRootState>({
   modules: {
     loginModule,
     systemModule,
+    analysisModule,
   },
 });
+
+export function useStore(): Store<IStoreType> {
+  return useVuexStore();
+}
